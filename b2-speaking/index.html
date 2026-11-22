@@ -56,7 +56,20 @@ h1,h2,h3,h4{font-family:'Montserrat',sans-serif}
 .footer{position:relative;z-index:1;text-align:center;padding:30px 24px;font-size:1.125rem;color:var(--cs-text-muted)}
 .footer-card{max-width:660px;margin:0 auto;padding:22px 26px;display:flex;flex-direction:column;gap:10px;align-items:center}
 .footer-card p{margin:0}
-.footer-card a{color:var(--cs-accent);text-decoration:underline;text-underline-offset:3px}
+.art-btn{
+  display:inline-block;margin-top:4px;
+  padding:.72rem 1.7rem;border-radius:999px;
+  border:1.5px solid var(--cs-accent);
+  background:var(--cs-accent-dim);
+  color:var(--cs-accent);
+  font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem;
+  letter-spacing:.04em;text-decoration:none;
+  transition:transform .15s ease,box-shadow .25s ease,background .25s ease,color .25s ease;
+}
+.art-btn:hover{transform:translateY(-2px);background:var(--cs-accent);color:var(--cs-bg);box-shadow:0 0 20px var(--cs-accent-glow)}
+.art-btn:active{transform:translateY(0) scale(.97)}
+.art-btn:focus-visible{outline:2px solid var(--cs-accent);outline-offset:3px}
+@media(max-width:640px){.art-btn{width:100%;text-align:center;padding:.8rem 1rem}}
 @media(max-width:640px){.hero h1{font-size:1.8rem}.deck-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -86,7 +99,7 @@ h1,h2,h3,h4{font-family:'Montserrat',sans-serif}
 <footer class="footer">
   <div class="glass footer-card">
     <p>Original exam-style practice content for B2 learners.</p>
-    <a href="../index.html">Back to Articulate</a>
+    <a class="art-btn" href="../index.html">Back to Articulate</a>
   </div>
 </footer>
 
