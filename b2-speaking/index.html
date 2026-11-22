@@ -36,6 +36,10 @@ h1,h2,h3,h4{font-family:'Montserrat',sans-serif}
 .hero{padding:48px 24px 32px;text-align:center;max-width:760px;margin:0 auto}
 .hero h1{font-size:2.6rem;margin-bottom:12px;background:linear-gradient(135deg,var(--cs-accent),#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 2px 14px var(--cs-accent-glow)) drop-shadow(0 1px 2px rgba(0,0,0,.6))}
 .hero p{color:var(--cs-text-muted);font-size:1rem;max-width:560px;margin:0 auto;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.hero-card{padding:38px 34px;text-align:center;max-width:660px;margin:0 auto}
+.hero-card h1{margin-bottom:14px}
+.hero-card p{margin-bottom:0}
+.hero-card a{color:var(--cs-accent);text-decoration:underline;text-underline-offset:3px}
 .section{max-width:1000px;margin:0 auto;padding:0 24px 56px}
 .section-title{font-family:'Montserrat',sans-serif;font-size:.75rem;text-transform:uppercase;letter-spacing:2px;color:var(--cs-text-muted);margin-bottom:18px}
 .deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
@@ -63,8 +67,12 @@ h1,h2,h3,h4{font-family:'Montserrat',sans-serif}
 </nav>
 
 <header class="hero">
-  <h1>English Speaking Practice (B2)</h1>
-  <p>12 topic-based practice decks covering Part 1 interview, Part 2 photo comparison, Part 3 collaborative task, and reading/listening/writing homework.</p>
+  <div class="glass hero-card">
+    <h1>B2 Speaking, Exam-Style</h1>
+    <p>Three free decks covering Part 1 interview, Part 2 photo comparison and Part 3
+       discussion, each with model answers. Nine more are in the
+       <a href="../full-library.html">full library</a>.</p>
+  </div>
 </header>
 
 <section class="section">
@@ -80,16 +88,7 @@ h1,h2,h3,h4{font-family:'Montserrat',sans-serif}
 <script>
 var DECKS=[
   {id:'01-health-fitness',title:'Health & Fitness',desc:'Exercise, diet, sleep, and wellbeing.',img:'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=940&q=80'},
-  {id:'02-education-school',title:'Education & School Life',desc:'Subjects, exams, teachers, and future study.',img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=940&q=80'},
-  {id:'03-friends-family',title:'Friends & Family',desc:'Relationships, siblings, and social life.',img:'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=940&q=80'},
-  {id:'04-food-cooking',title:'Food & Cooking',desc:'Meals, cuisines, eating habits, and restaurants.',img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=940&q=80'},
-  {id:'05-shopping-money',title:'Shopping & Money',desc:'Buying habits, budgets, and saving.',img:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=940&q=80'},
   {id:'06-work-future',title:'Work & Future Plans',desc:'Jobs, careers, university, and ambitions.',img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=940&q=80'},
-  {id:'07-music-concerts',title:'Music & Concerts',desc:'Genres, live music, and listening habits.',img:'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=940&q=80'},
-  {id:'08-sports-games',title:'Sports & Games',desc:'Team sports, fitness, and competitions.',img:'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=940&q=80'},
-  {id:'09-books-reading',title:'Books & Reading',desc:'Reading habits, genres, and libraries.',img:'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=940&q=80'},
-  {id:'10-films-tv',title:'Films & TV Shows',desc:'Cinema, streaming, and favourite series.',img:'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=940&q=80'},
-  {id:'11-transport',title:'Transport & Getting Around',desc:'Public transport, cars, cycling, and travel.',img:'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=940&q=80'},
   {id:'12-internet-ai',title:'The Internet & AI',desc:'Social media, artificial intelligence, and privacy.',img:'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=940&q=80'}
 ];
 
