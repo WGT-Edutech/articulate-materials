@@ -314,22 +314,35 @@
 
     function stopAuto() { idleT = 0; glideTarget = null; vel = 0; }
 
+    var DRAG_SCALE = 0.35;    // degrees per pixel while dragging
+    var MAX_FLING = 140;      // degrees/second — a firm flick moves roughly one card
+    var vSamples = [];
+
     stage.addEventListener('pointerdown', function (ev) {
       dragging = true; stopAuto();
-      startX = lastX = ev.clientX; startAngle = angle;
+      startX = ev.clientX; startAngle = angle;
       lastMoveT = performance.now(); lastDX = 0;
+      vSamples = [];
       stage.setPointerCapture && stage.setPointerCapture(ev.pointerId);
     });
     stage.addEventListener('pointermove', function (ev) {
       if (!dragging) return;
       var dx = ev.clientX - startX;
-      angle = startAngle + dx * 0.35;                       // 1:1 tracking
+      angle = startAngle + dx * DRAG_SCALE;                    // 1:1 tracking
       var now = performance.now();
       var dt = Math.max(1, now - lastMoveT) / 1000;
-      vel = ((dx - lastDX) * 0.35) / dt;                    // deg/second at release
+      vSamples.push(((dx - lastDX) * DRAG_SCALE) / dt);        // deg/second sample
+      if (vSamples.length > 3) vSamples.shift();               // average of last 3
       lastDX = dx; lastMoveT = now;
     });
-    function endDrag() { dragging = false; idleT = 0; }
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false; idleT = 0;
+      var sum = 0;
+      for (var i = 0; i < vSamples.length; i++) sum += vSamples[i];
+      var v = vSamples.length ? sum / vSamples.length : 0;
+      vel = Math.max(-MAX_FLING, Math.min(MAX_FLING, v));
+    }
     stage.addEventListener('pointerup', endDrag);
     stage.addEventListener('pointercancel', endDrag);
     stage.addEventListener('pointerleave', endDrag);
