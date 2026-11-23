@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#060a14">
 <meta name="description" content="Three free B2 speaking decks from Articulate English, plus the full 85-page library on Payhip.">
@@ -190,7 +190,7 @@ main{max-width:64rem;margin:0 auto;padding:0 1.25rem 4rem}
 
   <section class="hero">
     <span class="eyebrow">Free sample</span>
-    <div class="particle-text" id="particleTitle" aria-label="Practice English with real materials, not an app.">
+    <div class="particle-text" id="particleTitle" role="heading" aria-level="1" aria-label="Practice English with real materials, not an app.">
       <canvas aria-hidden="true"></canvas>
       <span class="particle-text__sr">Practice English with real materials, not an app.</span>
     </div>
