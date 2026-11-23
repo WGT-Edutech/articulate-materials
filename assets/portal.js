@@ -1,6 +1,6 @@
 /* Articulate Materials portal — interactions.
    Vanilla ports of React Bits patterns: theme picker, spotlight cards, tooltip,
-   CountUp, ClickSpark, CircularGallery. One shared rAF for the gallery. */
+   CountUp, CircularGallery. One shared rAF for the gallery. */
 (function () {
   'use strict';
 
@@ -62,7 +62,7 @@
   var PRODUCTS = [
     {
       title: 'Sliding In 1', href: PAYHIP, img: 'assets/img/cover-sliding-in-1.jpg',
-      alt: 'Sliding In 1 cover', cls: 'card--feature', electric: true,
+      alt: 'Sliding In 1 cover', cls: 'card--feature',
       meta: '366 questions · 27 topics', price: '$24',
       desc: 'The first open-ended speaking deck: age, appearance, childhood, choices and 23 more.',
       tip: '<strong>Sliding In 1</strong><em>366 open-ended questions across 27 topics, with a model answer on every slide and an optional shuffle. Installs as an app and works offline.</em>'
@@ -244,22 +244,6 @@
   } else {
     countUp();
   }
-
-  /* ─────────────── ClickSpark ─────────────── */
-  Array.prototype.forEach.call(document.querySelectorAll('.art-btn'), function (btn) {
-    btn.addEventListener('pointerdown', function (ev) {
-      if (REDUCED.matches) return;
-      var r = btn.getBoundingClientRect();
-      var s = document.createElement('span');
-      s.className = 'spark';
-      var size = Math.max(r.width, r.height) * 1.6;
-      s.style.width = s.style.height = size + 'px';
-      s.style.left = (ev.clientX - r.left) + 'px';
-      s.style.top = (ev.clientY - r.top) + 'px';
-      btn.appendChild(s);
-      setTimeout(function () { s.remove(); }, 600);
-    });
-  });
 
   /* ─────────────── CircularGallery ─────────────── */
   var ring = document.getElementById('galRing');
