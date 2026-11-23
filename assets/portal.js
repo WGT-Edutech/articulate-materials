@@ -50,12 +50,6 @@
       img: 'assets/img/free-slide-01.jpg', alt: 'A Sliding In question slide',
       meta: 'Free', desc: 'Four free topics from the open-ended speaking decks, with model answers.',
       tip: '<strong>Sliding In</strong><em>Open-ended discussion questions with a model answer on every slide. Each deck opens with four free topics you can try in class today.</em>'
-    },
-    {
-      title: 'Speak Easily Kids', href: 'https://articulate-english.github.io/speak-easily-kids/',
-      img: 'assets/img/free-slide-07.jpg', alt: 'A kids speaking practice slide',
-      meta: 'Free', desc: '240 speaking questions for ages 9–12, four topics free.',
-      tip: '<strong>Speak Easily Kids</strong><em>240 topic-based speaking questions for ages 9–12 across 20 topics. Four topics are free; the other sixteen are in the library.</em>'
     }
   ];
 
@@ -114,8 +108,9 @@
     {
       title: 'Speak Easily Kids', href: 'https://articulate-english.github.io/speak-easily-kids/',
       img: 'assets/img/free-slide-08.jpg', alt: 'A kids speaking practice slide',
-      meta: '240 questions · ages 9–12', desc: 'Topic-based speaking questions for younger learners.',
-      tip: '<strong>Speak Easily Kids</strong><em>240 speaking questions for ages 9–12 across 20 topics. Four topics are free.</em>'
+      meta: '240 questions · 4 topics free', price: '$16',
+      desc: 'Topic-based speaking questions for younger learners. Four topics free, all twenty paid.',
+      tip: '<strong>Speak Easily Kids</strong><em>240 topic-based speaking questions for ages 9–12 across 20 topics. Four topics are free; the other sixteen come with the one-off purchase.</em>'
     }
   ];
 
