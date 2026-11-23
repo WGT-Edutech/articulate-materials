@@ -251,10 +251,16 @@
   if (ring && stage) {
     var N = SHOTS.length;
     var radius = 460;
-    var angle = 0;            // current rotation in degrees
-    var target = 0;
-    var dragging = false, startX = 0, startAngle = 0, lastX = 0, lastT = 0, velocity = 0;
-    var auto = true;
+    var angle = 0;              // current rotation, degrees
+    var vel = 0;                // release velocity, degrees/second
+    var glideTarget = null;     // when set, ease toward this angle
+    var dragging = false, startX = 0, startAngle = 0;
+    var lastX = 0, lastMoveT = 0, lastDX = 0;
+    var idleT = 99;             // seconds since the last interaction
+    var lastFrame = performance.now();
+    var AUTO_DELAY = 2.8;       // pause before the idle glide resumes
+    var AUTO_SPEED = 3.0;       // degrees/second once the idle glide is at full speed
+    var FRICTION = Math.log(0.045);   // per-second velocity decay constant (negative)
 
     SHOTS.forEach(function (s, i) {
       var a = (360 / N) * i;
@@ -275,46 +281,62 @@
     layout();
     window.addEventListener('resize', layout);
 
-    function frame() {
+    /* Penner-style eases — a linear glide reads as mechanical */
+    function easeInOutCubic(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+    function frame(now) {
+      var dt = Math.min(0.05, (now - lastFrame) / 1000);
+      lastFrame = now;
       if (!dragging) {
-        if (Math.abs(velocity) > 0.02) {
-          target += velocity;
-          velocity *= 0.94;
-        } else if (auto && !REDUCED.matches) {
-          target += 0.055;
+        if (Math.abs(vel) > 0.05) {
+          /* exact integral of dvel/dt = k·vel, so distance is frame-rate independent */
+          var decay = Math.exp(FRICTION * dt);
+          angle += vel * (1 - decay) / (-FRICTION);
+          vel *= decay;
+        } else if (glideTarget !== null) {
+          var diff = glideTarget - angle;
+          if (Math.abs(diff) < 0.06) {
+            angle = glideTarget; glideTarget = null; idleT = 0; vel = 0;
+          } else {
+            angle += diff * (1 - Math.pow(0.002, dt));
+          }
+        } else {
+          idleT += dt;
+          if (idleT > AUTO_DELAY && !REDUCED.matches) {
+            angle += AUTO_SPEED * easeInOutCubic(Math.min(1, (idleT - AUTO_DELAY) / 1.4)) * dt;
+          }
         }
       }
-      angle += (target - angle) * 0.12;
       ring.style.transform = 'translateZ(-' + radius + 'px) rotateX(-8deg) rotateY(' + angle + 'deg)';
       requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
 
+    function stopAuto() { idleT = 0; glideTarget = null; vel = 0; }
+
     stage.addEventListener('pointerdown', function (ev) {
-      dragging = true; auto = false;
-      startX = lastX = ev.clientX; startAngle = target;
-      lastT = performance.now(); velocity = 0;
-      ring.style.pointerEvents = 'auto';
+      dragging = true; stopAuto();
+      startX = lastX = ev.clientX; startAngle = angle;
+      lastMoveT = performance.now(); lastDX = 0;
       stage.setPointerCapture && stage.setPointerCapture(ev.pointerId);
     });
     stage.addEventListener('pointermove', function (ev) {
       if (!dragging) return;
       var dx = ev.clientX - startX;
-      target = startAngle + dx * 0.35;
+      angle = startAngle + dx * 0.35;                       // 1:1 tracking
       var now = performance.now();
-      velocity = (ev.clientX - lastX) * 0.35 / Math.max(1, now - lastT) * 16;
-      lastX = ev.clientX; lastT = now;
+      var dt = Math.max(1, now - lastMoveT) / 1000;
+      vel = ((dx - lastDX) * 0.35) / dt;                    // deg/second at release
+      lastDX = dx; lastMoveT = now;
     });
-    function endDrag() { dragging = false; setTimeout(function () { auto = true; }, 2600); }
+    function endDrag() { dragging = false; idleT = 0; }
     stage.addEventListener('pointerup', endDrag);
     stage.addEventListener('pointercancel', endDrag);
     stage.addEventListener('pointerleave', endDrag);
 
     function nudge(d) {
-      auto = false;
-      target += d * (360 / N);
-      clearTimeout(nudge._t);
-      nudge._t = setTimeout(function () { auto = true; }, 2600);
+      stopAuto();
+      glideTarget = (Math.round(angle / (360 / N)) + d) * (360 / N);
     }
     document.getElementById('galPrev').addEventListener('click', function () { nudge(-1); });
     document.getElementById('galNext').addEventListener('click', function () { nudge(1); });
@@ -323,7 +345,7 @@
       if (ev.key === 'ArrowLeft') { ev.preventDefault(); nudge(-1); }
       if (ev.key === 'ArrowRight') { ev.preventDefault(); nudge(1); }
     });
-    stage.addEventListener('pointerenter', function () { auto = false; });
-    stage.addEventListener('pointerleave', function () { auto = true; });
+    stage.addEventListener('pointerenter', function () { stopAuto(); });
+    stage.addEventListener('pointerleave', function () { idleT = 0; });
   }
 })();

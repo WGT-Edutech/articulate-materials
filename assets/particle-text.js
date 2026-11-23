@@ -148,10 +148,14 @@
   function frame(now) {
     ctx.clearRect(0, 0, W, H);
     var t = now / 1000;
+    var dt = clamp((now - (frame._p || now)) / 1000, 0.001, 0.05);
+    frame._p = now;
     var gathering = startGatherAt > 0 && startGatherAt > -1e8;
     var gt = gathering ? clamp((now - startGatherAt) / GATHER_MS, 0, 1) : 1;
-    pointer.sx += (pointer.x - pointer.sx) * 0.18;
-    pointer.sy += (pointer.y - pointer.sy) * 0.18;
+    /* frame-rate independent smoothing (Kirupa: easing must be time-based) */
+    var smooth = 1 - Math.pow(1 - 0.18, dt * 60);
+    pointer.sx += (pointer.x - pointer.sx) * smooth;
+    pointer.sy += (pointer.y - pointer.sy) * smooth;
 
     ctx.shadowBlur = PARTICLE_SIZE * 3;
     ctx.shadowColor = 'rgb(' + HIGHLIGHT[0] + ',' + HIGHLIGHT[1] + ',' + HIGHLIGHT[2] + ')';
